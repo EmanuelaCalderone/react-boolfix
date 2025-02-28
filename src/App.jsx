@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+//importo hook
+import { useState, useContext } from "react";
+//importo GlobalContext
+import { GlobalContext } from "./context/GlobalContext";
+//importo l'header
+import Header from "./components/Header";
+//importo la barra di ricerca
+import SearchBar from "./components/SearchBar";
+//import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+//componente principale App
+const App = () => {
+  //recupero i film da GlobalContext
+  const { movies } = useContext(GlobalContext);
+  //definisco stato per verificare se l'utente ha già fatto una ricerca
+  const [searched, setSearched] = useState(false);
+
+  //funzione per la ricerca
+  const handleSearch = (query) => {
+    if (query.trim() !== "") {
+      //aggiorno lo stato solo se l'utente ha inserito qualcosa
+      setSearched(true);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    //div principale pagina
+    <div>
+      {/* //titolo */}
+      <h1>BOOLFIX</h1>
+      {/* passo la funzione handleSearch come prop a SearchBar */}
+      <SearchBar onSearch={handleSearch} />
 
-export default App
+      {/* mostro la lista degli eventuali film trovati */}
+      {movies.length > 0 ? (
+        <ul>
+          {/* itero su tutti i film trovati */}
+          {movies.map((movie) => (
+            //mostro titolo, titolo originale, lingua e voto
+            <li key={movie.id}>
+              {movie.title} - {movie.original_title} ({movie.original_language}) {movie.vote_average}
+            </li>
+          ))}
+        </ul>
+      ) : searched ? (
+        //se non ci sono risultati, mostro un messaggio
+        <p>Non è stato trovato nessun film corrispondente alla ricerca</p>
+      ) : null}
+    </div>
+  );
+};
+
+export default App;
