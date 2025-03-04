@@ -6,12 +6,14 @@ import { GlobalContext } from "./context/GlobalContext";
 import Header from "./components/Header";
 //importo la barra di ricerca
 import SearchBar from "./components/SearchBar";
+// Importo SearchResults
+import SearchResults from "./components/SearchResults";
 //import './App.css'
 
 //componente principale App
 const App = () => {
   //recupero i film da GlobalContext
-  const { movies } = useContext(GlobalContext);
+  const { results } = useContext(GlobalContext);
   //definisco stato per verificare se l'utente ha già fatto una ricerca
   const [searched, setSearched] = useState(false);
 
@@ -26,24 +28,12 @@ const App = () => {
   return (
     //div principale pagina
     <div>
-      {/* //titolo */}
-      <h1>BOOLFIX</h1>
-      {/* passo la funzione handleSearch come prop a SearchBar */}
-      <SearchBar onSearch={handleSearch} />
-
+      {/* //header */}
+      <Header />
       {/* mostro la lista degli eventuali film trovati */}
-      {movies.length > 0 ? (
-        <ul>
-          {/* itero su tutti i film trovati */}
-          {movies.map((movie) => (
-            //mostro titolo, titolo originale, lingua e voto
-            <li key={movie.id}>
-              {movie.title} - {movie.original_title} ({movie.original_language}) {movie.vote_average}
-            </li>
-          ))}
-        </ul>
+      {results.length > 0 ? (
+        <SearchResults />
       ) : searched ? (
-        //se non ci sono risultati, mostro un messaggio
         <p>Non è stato trovato nessun film corrispondente alla ricerca</p>
       ) : null}
     </div>

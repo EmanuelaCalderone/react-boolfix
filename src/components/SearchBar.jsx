@@ -7,14 +7,14 @@ const SearchBar = ({ onSearch }) => {
     //salvo input utente
     const [query, setQuery] = useState("");
     //uso la funzione da GlobalContext
-    const { searchMovies } = useContext(GlobalContext);
+    const { searchMedia } = useContext(GlobalContext);
 
     //funzione che verrà chiamata quando l'utente clicca sulla barra
     const handleSearch = () => {
         //se l'input non è vuoto
         if (query.trim() !== "") {
             //chiamo la funzione per cercare i film
-            searchMovies(query);
+            searchMedia(query);
             if (onSearch) {
                 onSearch(query);
             }

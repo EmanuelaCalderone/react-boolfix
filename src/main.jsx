@@ -4,10 +4,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 //BrowserRouter per gestire la navigazione con React Router
 import { BrowserRouter } from "react-router-dom";
-///importo componente principale app
-import App from "./App.jsx";
 //globalProvider per wrappare l'app con GlobalContext
 import { GlobalProvider } from "./context/GlobalContext.jsx";
+///importo componente principale app
+import App from "./App.jsx";
 //importo il css
 import "./index.css";
 
